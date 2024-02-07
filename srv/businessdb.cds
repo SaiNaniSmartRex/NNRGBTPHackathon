@@ -128,8 +128,8 @@ annotate BusinessDB.Businesspartner with @(
     UI.Facets               : [{
         $Type : 'UI.ReferenceFacet',
         ID    : 'BusinesspartnerFacet',
-        Label : 'BusinessPartner',
-        Target: '@UI.FieldGroup#BusinessPartner',
+        Label : 'Businesspartner',
+        Target: '@UI.FieldGroup#Businesspartner',
     }, ],
 );
 

@@ -13,12 +13,14 @@ service BusinessDB {
          @UI.Hidden : true
         ID,
         * 
+    };
 }
 
 annotate BusinessDB.Businesspartner with @odata.draft.enabled;
 annotate BusinessDB.Store with @odata.draft.enabled;
 annotate BusinessDB.Product with @odata.draft.enabled;
 annotate BusinessDB.Stockdata with @odata.draft.enabled;
+// annotate BusinessDB.State with @odata.draft.enabled;
 
 annotate BusinessDB.Businesspartner with {
     pincode @assert.format: '^[1-9]{1}[0-9]{2}\\s{0, 1}[0-9]{3}$';
@@ -215,7 +217,7 @@ annotate BusinessDB.Product with @(
         },
         {
             Label: 'Product Name',
-            Value: productid
+            Value: productname
         },
         {
             Label: 'Product Image URL',
@@ -255,8 +257,7 @@ annotate BusinessDB.Product with @(
             },
         ],
     },
-    UI.Facets             : [
-        {
+    UI.Facets: [ {
         $Type : 'UI.ReferenceFacet',
         ID    : 'productFacet',
         Label : 'product facets',
@@ -329,6 +330,28 @@ annotate BusinessDB.Businesspartner with {
     );
 };
 
+annotate BusinessDB.Store with {
+    state @(
+        Common.ValueListWithFixedValues: true,
+        Common.ValueList               : {
+            Label         : 'State',
+            CollectionPath: 'States',
+            Parameters    : [
+                {
+                    $Type            : 'Common.ValueListParameterInOut',
+                    LocalDataProperty: state_code,
+                    ValueListProperty: 'code'
+                },
+
+                {
+                    $Type            : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'description'
+                },
+            ]
+        }
+    );
+};
+
 annotate BusinessDB.Stockdata with {
     storeid @(
         Common.ValueListWithFixedValues: true,
@@ -349,7 +372,7 @@ annotate BusinessDB.Stockdata with {
             ]
         }
     );
-product_id @(
+    product_id @(
         Common.ValueListWithFixedValues: true,
         Common.ValueList : {
             Label: 'Product id',
@@ -357,16 +380,15 @@ product_id @(
             Parameters: [
                 {
                     $Type             : 'Common.ValueListParameterInOut',
-                    LocalDataProperty : product_id,
+                    LocalDataProperty : productid,
                     ValueListProperty : 'ID'
                 },
                 {
                     $Type             : 'Common.ValueListParameterDisplayOnly',
-                    ValueListProperty : 'name'
+                    ValueListProperty : 'productname'
                 },
              
             ]
         }
     );
 }
-

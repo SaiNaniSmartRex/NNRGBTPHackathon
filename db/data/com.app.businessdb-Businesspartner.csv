@@ -1,2 +1,3 @@
-partnerid,first_name,last_name,address1,address2,city,state,pincode,is_gstn_registered,gstin_no,is_vendor,is_coustomer
-5070,Rex,State,hyd,ktdm,hyderabad,Telangana,507101,true,80898,true,false
+partnerid,first_name,last_name,address1,address2,city,state_code,pincode,is_gstn_registered,gstin_no,is_vendor,is_coustomer
+5070,Rex,State,hyd,ktdm,hyderabad,Telangana,507101,true,GSTN123456789Z,true,false
+5071,Hell,Stob,riyala,khmm,secundrabad,Telangana,507102,false,GSTN123456789A,true,false

@@ -1,13 +1,12 @@
 namespace com.app.businessdb;
-using { managed, cuid } from '@sap/cds/common';
+using { cuid } from '@sap/cds/common';
 
 @assert.unique:{
     partnerid:[partnerid]
 }
-entity  Businesspartner {
-    key Id:UUID;
+entity  Businesspartner : cuid {
     @title: 'Business Partner Number'
-    partnerid: String(5) @mandatory;
+    partnerid: String(10) @mandatory;
     @title: 'First Name'
     first_name: String(40) @mandatory;
     @title: 'Last Name'
@@ -23,25 +22,16 @@ entity  Businesspartner {
     @title: 'Pin Code'
     pincode: String(10) @mandatory;
     @title: 'Is_gstn_registered'
-    is_gstn_registered: Boolean;
+    is_gstn_registered: Boolean default false;
     @title: 'GSTIN Number'
     gstin_no: String(10) @mandatory;
     @title: 'Is_Vendor'
-    is_vendor: Boolean;
+    is_vendor: Boolean default false;
     @title: 'Is_Coustomer'
-    is_coustomer: Boolean;
+    is_coustomer: Boolean default false;
 }
 
-@cds.persistence.skip
-entity States{
-    key ID:UUID;
-    @title: 'code'
-    key code: String(10);
-    @title: 'descrption'
-    description: String(10);
-}
-
-entity Store:cuid,managed{
+entity Store {
     key ID:UUID;
     @title:'Store ID'
     storeid:String(10) @mandatory;
@@ -52,15 +42,15 @@ entity Store:cuid,managed{
     @title:'Address22'
     address2:String(20) @mandatory;
     @title:'State'
-    state:String(2) @mandatory;
+    state: Association to States;
     @title:'Pin Code'
     pincode:String(6) @mandatory;
 }
 
-entity Product : cuid,managed{
-    key ID:UUID;
+entity Product {
+    key ID: UUID;
     @title:'Product ID'
-    key productid:String(10) @mandatory;
+    productid:String(10) @mandatory;
     @title:'Product_Name'
     productname:String(20) @mandatory;
     @title:'Product Image URL'
@@ -71,12 +61,20 @@ entity Product : cuid,managed{
     sell_price:String(10) @mandatory;
 }
 
-entity Stockdata : cuid,managed{
-    key ID:UUID;
+entity Stockdata {
+    key ID: UUID;
     @title:'store id'
-    storeid:String(10);
+    storeid: Association to Store;
     @title:'Product id'
-    product_id:String(10);
+    product_id: Association to Product;
     @title:'Stock quantity'
-    stock_qty:string(10);
+    stock_qty : Integer;
+}
+
+@cds.persistence.skip
+entity States {
+    @title: 'code'
+    key code: String(10);
+    @title: 'description'
+    description: String(10);
 }

@@ -6,7 +6,7 @@ module.exports = cds.service.impl(async function () {
         return results;
       });
     this.before("CREATE",  Businesspartner, async (req) => {
-        const { partnerid, Is_gstn_registered, gstin_no } = req.data;
+        const { partnerid, is_gstn_registered, gstin_no } = req.data;
 
 
         if (is_gstn_registered && !gstin_no) {
@@ -29,9 +29,12 @@ module.exports = cds.service.impl(async function () {
       });
       this.on('READ',States,async(req)=>{
         states=[
+            {"code":"TN","description":"Tamil Nadu"},
+            {"code":"MA","description":"Maharastra"},
             {"code":"TS","description":"Telangana"},
             {"code":"AP","description":"Andra Pradesh"},
-            {"code":"TN","description":"Tamil Nadu"},
+            {"code":"PO","description":"Pondi"},
+            
         ]
         states.$count=states.length
         return states;

@@ -3,6 +3,7 @@ using { com.app.businessdb as db} from '../db/schema';
 service BusinessDB {
     entity Businesspartner as projection on db.Businesspartner;
     entity States as projection on db.States;
+    entity Stockdata as projection on db.Stockdata;
     entity Store as projection on db.Store{
         @UI.Hidden : true
         ID,
@@ -12,7 +13,6 @@ service BusinessDB {
          @UI.Hidden : true
         ID,
         * 
-    entity Stockdata as projection on db.Stockdata;
 }
 
 annotate BusinessDB.Businesspartner with @odata.draft.enabled;
@@ -21,8 +21,8 @@ annotate BusinessDB.Product with @odata.draft.enabled;
 annotate BusinessDB.Stockdata with @odata.draft.enabled;
 
 annotate Market.Business_Partner with {
-    pinCode @assert.format: '^[1-9]{1}[0-9]{2}\\s{0, 1}[0-9]{3}$';
-    Gst_num @assert.format: '^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[Z]{1}[0-9]{1}$';
+    pincode @assert.format: '^[1-9]{1}[0-9]{2}\\s{0, 1}[0-9]{3}$';
+    gstin_no @assert.format: '^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[Z]{1}[0-9]{1}$';
 }
 
 annotate BusinessDB.States with @(

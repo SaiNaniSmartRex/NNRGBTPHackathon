@@ -1,0 +1,2 @@
+partnerid,first_name,last_name,address1,address2,city,state,pincode,is_gstn_registered,gstin_no,is_vendor,is_coustomer
+5070,Rex,State,hyd,ktdm,hyderabad,Telangana,507101,true,80898,true,false

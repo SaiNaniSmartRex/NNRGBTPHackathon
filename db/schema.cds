@@ -33,7 +33,7 @@ entity  Businesspartner {
 }
 
 @cds.persistence.skip
-entity States:  cuid,managed{
+entity States{
     key ID:UUID;
     @title: 'code'
     key code: String(10);

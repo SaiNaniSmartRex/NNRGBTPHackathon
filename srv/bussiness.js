@@ -6,10 +6,10 @@ module.exports = cds.service.impl(async function () {
         return results;
       });
     this.before("CREATE",  Businesspartner, async (req) => {
-        const { bp_no, Is_gstn_registered, gstin_no } = req.data;
+        const { partnerid, Is_gstn_registered, gstin_no } = req.data;
 
 
-        if (Is_gstn_registered && !gstin_no) {
+        if (is_gstn_registered && !gstin_no) {
             req.error({
                 code: "MISSING_GST_NUM",
                 message: "GSTIN number is mandatory when Is_gstn_registered is true",

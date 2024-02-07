@@ -43,7 +43,7 @@ annotate BusinessDB.Businesspartner with @(
     UI.LineItem: [
 
         {
-            Label: 'Bussiness Partner Nimber',
+            Label: 'Bussiness Partner Number',
             Value: partnerid
         },
         {
@@ -52,7 +52,7 @@ annotate BusinessDB.Businesspartner with @(
         },
         
         {
-            Label: 'Second Name',
+            Label: 'Last Name',
             Value: last_name
         },
         {
@@ -73,14 +73,14 @@ annotate BusinessDB.Businesspartner with @(
         },
         {
             Label: 'Is_gstn_registered',
-            Value: Is_gstn_registered
+            Value: is_gstn_registered
         },
         {
             Label: 'GSTIN Number',
             Value: gstin_no
         },
     ],
-    UI.FieldGroup #BusinessPartner: {
+    UI.FieldGroup #Businesspartner: {
         $Type: 'UI.FieldGroupType',
         Data : [
             {
@@ -117,7 +117,7 @@ annotate BusinessDB.Businesspartner with @(
                 Value: state_code
             },
             {
-                Value: Is_gstn_registered
+                Value: is_gstn_registered
             },
             {
                 $Type: 'UI.DataField',
@@ -162,7 +162,7 @@ annotate BusinessDB.Store with @(
         },
         {
             Label: 'Pin code',
-            Value: Pincode
+            Value: pincode
         },
     ],
     UI.FieldGroup #store: {
@@ -255,7 +255,8 @@ annotate BusinessDB.Product with @(
             },
         ],
     },
-    UI.Facets             : [{
+    UI.Facets             : [
+        {
         $Type : 'UI.ReferenceFacet',
         ID    : 'productFacet',
         Label : 'product facets',
@@ -279,7 +280,7 @@ annotate BusinessDB.Stockdata with @(
             Value:stock_qty
         }
     ],
-    UI.FieldGroup #stock :{
+    UI.FieldGroup #stockdata :{
         $Type:'UI.FieldGroupType',
         Data:[
              {
@@ -300,7 +301,7 @@ annotate BusinessDB.Stockdata with @(
         {
             $Type:'UI.ReferenceFacet',
             ID:'stockdataFacet',
-            Label:'stock data facets',
+            Label:'stockdata facets',
             Target:'@UI.FieldGroup#stockdata'
         },
     ],

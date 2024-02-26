@@ -203,7 +203,7 @@ annotate BusinessDB.Store with @(
     UI.Facets           : [{
         $Type : 'UI.ReferenceFacet',
         ID    : 'storeFacet',
-        Label : 'store facets',
+        Label : 'store Details',
         Target: '@UI.FieldGroup#store'
     }, ],
 );
@@ -302,7 +302,7 @@ annotate BusinessDB.Stockdata with @(
         {
             $Type:'UI.ReferenceFacet',
             ID:'stockdataFacet',
-            Label:'stockdata facets',
+            Label:'Stock Data Information',
             Target:'@UI.FieldGroup#stockdata'
         },
     ],
@@ -356,8 +356,8 @@ annotate BusinessDB.Stockdata with {
     storeid @(
         Common.ValueListWithFixedValues: true,
         Common.ValueList : {
-            Label: 'Store id',
-            CollectionPath : 'Store',
+            Label: 'storeid',
+            CollectionPath : 'Stores',
             Parameters: [
                 {
                     $Type             : 'Common.ValueListParameterInOut',

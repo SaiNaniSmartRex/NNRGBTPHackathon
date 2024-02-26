@@ -10,9 +10,20 @@
     "express": "^4"
   },
   "devDependencies": {
-    "@cap-js/sqlite": "^1"
+    "@cap-js/sqlite": "^1",
+    "@sap/ux-specification": "^1.120.3"
   },
   "scripts": {
-    "start": "cds-serve"
-  }
+    "start": "cds-serve",
+    "watch-businesspartner": "cds watch --open businesspartner/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-stockdata": "cds watch --open stockdata/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-store": "cds watch --open store/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-product": "cds watch --open product/webapp/index.html?sap-ui-xx-viewCache=false"
+  },
+  "sapux": [
+    "app/businesspartner",
+    "app/stockdata",
+    "app/store",
+    "app/product"
+  ]
 }

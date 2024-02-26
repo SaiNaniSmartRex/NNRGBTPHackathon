@@ -1,6 +1,6 @@
 ID,productid,name,image_url,cost_price,sell_price
-11111111-1111-1111-1111-111111111111,P1001,Smartphone X,https://example.com/smartphoneX.jpg,500.00,699.99
-22222222-2222-2222-2222-222222222222,P1002,Laptop Pro,https://example.com/laptopPro.jpg,1200.00,1499.99
-33333333-3333-3333-3333-333333333333,P1003,Smart TV,https://example.com/smartTV.jpg,800.00,999.99
-44444444-4444-4444-4444-444444444444,P1004,Headphones HD,https://example.com/headphonesHD.jpg,50.00,79.99
-55555555-5555-5555-5555-555555555555,P1005,Tablet Mini,https://example.com/tabletMini.jpg,300.00,399.99
+31d43ad5-6741-48b5-b397-a1d9bd9d167e,P1,headsetA,https://www.freepik.com/photos/samsungheadphone,1500.00,399.99
+cee21a5c-e127-4987-aa4d-febe9ad52077,P2,headsetd,https://www.freepik.com/photos/razerheadphone,1200.00,199.99
+f34dd48c-3acf-478d-b52f-7945afe1483d,P3,headsetf,https://www.freepik.com/photos/iphoneheadphone,3800.00,1999.99
+cfd9e46f-3506-4352-9710-85f25b53fd96,P4,headsetx,https://www.freepik.com/photos/boatgheadphone,1250.00,798.99
+497fd73f-2551-4c31-950f-9fdac55c27b5,P5,headsetz,https://www.freepik.com/photos/skullcandyheadphone,1400.00,709.99

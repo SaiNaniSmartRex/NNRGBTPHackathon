@@ -1,4 +1,4 @@
-ID,productid,name,image_url,cost_price,sell_price
+ID,productid,productname,image_url,cost_price,sell_price
 31d43ad5-6741-48b5-b397-a1d9bd9d167e,P1,headsetA,https://www.freepik.com/photos/samsungheadphone,1500.00,399.99
 cee21a5c-e127-4987-aa4d-febe9ad52077,P2,headsetd,https://www.freepik.com/photos/razerheadphone,1200.00,199.99
 f34dd48c-3acf-478d-b52f-7945afe1483d,P3,headsetf,https://www.freepik.com/photos/iphoneheadphone,3800.00,1999.99

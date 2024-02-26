@@ -7,7 +7,7 @@ service BusinessDB {
     entity Store as projection on db.Store{
         @UI.Hidden : true
         ID,
-        * 
+        *
     };
     entity Product as projection on db.Product {
          @UI.Hidden : true
@@ -125,6 +125,12 @@ annotate BusinessDB.Businesspartner with @(
                 $Type: 'UI.DataField',
                 Value: gstin_no
             },
+            {
+                Value: is_vendor
+            },
+            {
+                Value: is_coustomer
+            }
         ],
     },
     UI.Facets               : [{
@@ -155,10 +161,6 @@ annotate BusinessDB.Store with @(
             Value: address2
         },
         {
-            Label: 'City',
-            Value: city
-        },
-        {
             Label: 'State',
             Value: state_code
         },
@@ -187,10 +189,6 @@ annotate BusinessDB.Store with @(
                 Value: address2
             },
             {
-                Label: 'City',
-                Value: city
-            },
-            {
                 Label: 'State',
                 Value: state_code
             },
@@ -207,6 +205,14 @@ annotate BusinessDB.Store with @(
         Target: '@UI.FieldGroup#store'
     }, ],
 );
+
+
+annotate BusinessDB.Product with {
+    @Common.Text : '{Product}'
+    @Core.IsURL : true
+    @Core.MediaType : 'image/jpg'
+    image_url
+};
 
 
 annotate BusinessDB.Product with @(
@@ -266,6 +272,7 @@ annotate BusinessDB.Product with @(
 
 );
 
+
 annotate BusinessDB.Stockdata with @(
     UI.LineItem:[
         {
@@ -274,7 +281,7 @@ annotate BusinessDB.Stockdata with @(
         },
          {
             Label:'Product Id',
-            Value:product_id
+            Value:productid
         },
         {
             Label:'Stock Quantity',
@@ -290,7 +297,7 @@ annotate BusinessDB.Stockdata with @(
         },
          {
             Label:'Product Id',
-            Value:product_id
+            Value:productid
         },
          {
             Label:'Stock Quantity',
@@ -357,7 +364,7 @@ annotate BusinessDB.Stockdata with {
         Common.ValueListWithFixedValues: true,
         Common.ValueList : {
             Label: 'storeid',
-            CollectionPath : 'Stores',
+            CollectionPath : 'Store',
             Parameters: [
                 {
                     $Type             : 'Common.ValueListParameterInOut',
@@ -372,11 +379,11 @@ annotate BusinessDB.Stockdata with {
             ]
         }
     );
-    product_id @(
+    productid @(
         Common.ValueListWithFixedValues: true,
         Common.ValueList : {
             Label: 'Product id',
-            CollectionPath : 'Product',
+            CollectionPath : 'Products',
             Parameters: [
                 {
                     $Type             : 'Common.ValueListParameterInOut',

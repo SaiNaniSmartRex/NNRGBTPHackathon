@@ -54,11 +54,11 @@ entity Product {
     @title:'Product_Name'
     productname:String(20) @mandatory;
     @title:'Product Image URL'
-    image_url:String(100) @mandatory;
+    image_url:String(100) default'https://www.google.com/imgres?imgurl=https%3A%2F%2Fm.media-amazon.com%2Fimages%2FI%2F51HCHFclmmL.jpg&tbnid=zY4UP_cFKTAGhM&vet=12ahUKEwjZwabZt8uEAxVNS2wGHRwFCnEQMygQegUIARCZAQ..i&imgrefurl=https%3A%2F%2Fwww.amazon.in%2F&docid=a5LOTjWnazn6QM&w=500&h=500&q=image%20amozon&ved=2ahUKEwjZwabZt8uEAxVNS2wGHRwFCnEQMygQegUIARCZAQ';
     @title:'product Cost Price'
-    cost_price:String(10) @mandatory;
+    cost_price:String(10) @mandatory; //mrp
     @title:'product Sell Price'
-    sell_price:String(10) @mandatory;
+    sell_price:String(10) @mandatory;  //selling price
 }
 
 entity Stockdata {
@@ -66,7 +66,7 @@ entity Stockdata {
     @title:'store id'
     storeid: Association to Store;
     @title:'Product id'
-    product_id: Association to Product;
+    productid: Association to Product;
     @title:'Stock quantity'
     stock_qty : Integer;
 }
@@ -77,4 +77,47 @@ entity States {
     key code: String(10);
     @title: 'description'
     description: String(10);
+}
+
+entity Purchase : cuid {
+    key ID: UUID;
+    @title:'Purchase Order Number'
+    purchase_order_number:String(10);
+    @title:'Business Partner Name'
+    bpname :Association to Businesspartner;
+    @title:'Purchase Order Date'
+    purchaseorder :Date;
+    @title: 'Items'
+    Items:Composition of many{
+        key ID : UUID;
+        item : Association to Items;
+    }
+}
+
+entity Items {
+    key ID :UUID;
+    @title: 'Store ID'
+    storeid : Association to Store;
+    @title: 'Stock Quantity'
+    stock_qty : Association to Stockdata;
+    @title: 'Product ID'
+    productid : Association to Product;
+    @title: 'Price'
+    price : Association to Product;
+}   
+
+
+entity Sales {
+    key ID :UUID;
+    @title: 'Sales Ordernumber'
+    salesorder : Integer;
+    @title: 'Businesspartner'
+    bpname : Association to Businesspartner;
+    @title: 'SalesDate'
+    saleDate : Association to Purchase;
+     @title: 'Items'
+     Items:Composition of many{
+        key ID : UUID;
+        item : Association to Items;
+    }
 }

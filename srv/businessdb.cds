@@ -4,6 +4,13 @@ service BusinessDB {
     entity Businesspartner as projection on db.Businesspartner;
     entity States as projection on db.States;
     entity Stockdata as projection on db.Stockdata;
+    entity Purchase as projection on db.Purchase{
+        @UI.Hidden : true
+        ID,
+        *
+    };
+    entity Items as projection on db.Items;
+    entity Sales as projection on db.Sales;
     entity Store as projection on db.Store{
         @UI.Hidden : true
         ID,
@@ -21,6 +28,9 @@ annotate BusinessDB.Store with @odata.draft.enabled;
 annotate BusinessDB.Product with @odata.draft.enabled;
 annotate BusinessDB.Stockdata with @odata.draft.enabled;
 // annotate BusinessDB.State with @odata.draft.enabled;
+annotate BusinessDB.Purchase with @odata.draft.enabled;
+annotate BusinessDB.Sales with @odata.draft.enabled;
+annotate BusinessDB.Items with @odata.draft.enabled;
 
 annotate BusinessDB.Businesspartner with {
     pincode @assert.format: '^[1-9]{1}[0-9]{2}\\s{0, 1}[0-9]{3}$';
@@ -277,11 +287,11 @@ annotate BusinessDB.Stockdata with @(
     UI.LineItem:[
         {
             Label:'Store Id',
-            Value:storeid
+            Value:storeid_ID
         },
          {
             Label:'Product Id',
-            Value:productid
+            Value:productid_ID
         },
         {
             Label:'Stock Quantity',
@@ -293,11 +303,11 @@ annotate BusinessDB.Stockdata with @(
         Data:[
              {
             Label:'Store Id',
-            Value:storeid
+            Value:storeid_ID
         },
          {
             Label:'Product Id',
-            Value:productid
+            Value:productid_ID
         },
          {
             Label:'Stock Quantity',
@@ -361,6 +371,8 @@ annotate BusinessDB.Store with {
 
 annotate BusinessDB.Stockdata with {
     storeid @(
+        Common.Text: storeid.storeid,
+        Common.TextArrangement: #TextOnly,
         Common.ValueListWithFixedValues: true,
         Common.ValueList : {
             Label: 'storeid',
@@ -368,33 +380,336 @@ annotate BusinessDB.Stockdata with {
             Parameters: [
                 {
                     $Type             : 'Common.ValueListParameterInOut',
-                    LocalDataProperty : storeid,
+                    LocalDataProperty : storeid_ID,
                     ValueListProperty : 'ID'
                 },
                 {
                     $Type             : 'Common.ValueListParameterDisplayOnly',
-                    ValueListProperty : 'name'
+                    ValueListProperty : 'storeid'
                 },
              
             ]
         }
     );
     productid @(
+        Common.Text: productid.productid,
+        Common.TextArrangement: #TextOnly,
         Common.ValueListWithFixedValues: true,
         Common.ValueList : {
             Label: 'Product id',
-            CollectionPath : 'Products',
+            CollectionPath : 'Product',
             Parameters: [
                 {
                     $Type             : 'Common.ValueListParameterInOut',
-                    LocalDataProperty : productid,
+                    LocalDataProperty : productid_ID,
                     ValueListProperty : 'ID'
                 },
                 {
                     $Type             : 'Common.ValueListParameterDisplayOnly',
-                    ValueListProperty : 'productname'
+                    ValueListProperty : 'productid'
                 },
              
+            ]
+        }
+    );
+} 
+
+annotate BusinessDB.Purchase with @(
+    UI.LineItem: [
+        {
+            $Type : 'UI.DataField',
+            Value : purchase_order_number
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : bpname_ID
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : purchaseorder
+        },
+    ],
+    UI.FieldGroup #purchaseData : {
+        $Type : 'UI.FieldGroupType',
+        Data : [
+            {
+            $Type : 'UI.DataField',
+            Value : purchase_order_number
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : bpname_ID
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : purchaseorder
+        },
+        ],
+},
+UI.Facets : [
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID : 'StoreInfoFacet',
+            Label : 'Store Information',
+            Target : '@UI.FieldGroup#purchaseData',
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID : 'ItemsFacet',
+            Label : 'Items Information',
+            Target : 'Items/@UI.LineItem'
+        },
+    ],
+
+
+);
+
+annotate BusinessDB.Purchase with {
+    bpname  @(
+        Common.Text: bpname.first_name,
+        Common.TextArrangement: #TextOnly,
+        Common.ValueListWithFixedValues: true,
+        Common.ValueList               : {
+            Label         : 'Business Partner Name',
+            CollectionPath: 'Businesspartner',
+            Parameters    : [
+                {
+                    $Type            : 'Common.ValueListParameterInOut',
+                    LocalDataProperty: bpname_ID,
+                    ValueListProperty: 'ID'
+                },
+                {
+                    $Type            : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'first_name'
+                },
+
+            ]
+        }
+    );
+}
+
+annotate BusinessDB.Purchase.Items with @(
+    UI.LineItem         : [
+        {
+            Label: 'Store Id',
+            Value: item_ID
+        },
+        {
+            Label: 'Product Id',
+            Value: item_ID
+        },
+        {
+            Label: 'Quantity',
+            Value: item_ID
+        },
+        {
+            Label: 'Price',
+            Value: item_ID   //item.price=product.sell_price
+        },
+
+    ],
+    UI.FieldGroup #PurchaseItems: {
+        $Type: 'UI.FieldGroupType',
+        Data : [
+            {
+                Label: 'Store Id',
+                Value: item_ID
+            },
+            {
+                Label: 'Product Id',
+                Value: item_ID
+            },
+            {
+                Label: 'Quantity',
+                Value:item_ID
+            },
+            {
+                Label: 'Price',
+                Value: item_ID
+            },
+        ],
+    },
+        UI.Facets: [{
+            $Type : 'UI.ReferenceFacet',
+            ID    : 'puritemsFacet',
+            Label : 'purchaseitems',
+            Target: '@UI.FieldGroup#PurchaseItems',
+        }, ]
+    
+);
+
+annotate BusinessDB.Items with @(
+    UI.LineItem         : [
+        {
+            Label: 'Store Id',
+            Value: storeid.storeid
+        },
+        {
+            Label: 'Product Id',
+            Value: productid.productid
+        },
+        {
+            Label: 'Quantity',
+            Value: stock_qty_ID
+        },
+        {
+            Label: 'Price',
+            Value: price.sell_price   //item.price=product.sell_price
+        },
+
+    ],
+    UI.FieldGroup #items: {
+        $Type: 'UI.FieldGroupType',
+        Data : [
+            {
+                Label: 'Store Id',
+                Value: storeid_ID
+            },
+            {
+                Label: 'Product Id',
+                Value: productid_ID
+            },
+            {
+                Label: 'Quantity',
+                Value: stock_qty_ID
+            },
+            {
+                Label: 'Price',
+                Value: price_ID
+            },
+        ],
+    },
+    UI.Facets : [
+        {
+        $Type : 'UI.ReferenceFacet',
+        ID    : 'itemsFacet',
+        Label : 'items',
+        Target: '@UI.FieldGroup#items',
+    }, ],
+);
+
+
+annotate BusinessDB.Sales with @(
+    UI.LineItem           : [
+        {
+            Label: 'Sales Ordernumber',
+            Value: salesorder
+        },
+        {
+            Label: 'Businesspartner',
+            Value: bpname_ID
+        },
+        {
+            Label: 'SalesDate',
+            Value: saleDate_ID
+        },
+    ],
+    UI.FieldGroup #sales: {
+        $Type: 'UI.FieldGroupType',
+        Data : [
+        {
+            Label: 'Sales Order Number',
+            Value: salesorder
+        },
+        {
+            Label: 'Businesspartner',
+            Value: bpname_ID
+        },
+        {
+            Label: 'SalesDate',
+            Value: saleDate_ID
+        },
+        ],
+    },
+    UI.Facets: [ {
+        $Type : 'UI.ReferenceFacet',
+        ID    : 'salesFacet',
+        Label : 'sales facets',
+        Target: '@UI.FieldGroup#sales'
+    }, ],
+
+);
+
+annotate BusinessDB.Items with {
+    storeid  @(
+        Common.Text: storeid.storeid,
+        Common.TextArrangement: #TextOnly,
+        Common.ValueListWithFixedValues: true,
+        Common.ValueList               : {
+            Label         : 'Store id',
+            CollectionPath: 'Store',
+            Parameters    : [
+                {
+                    $Type            : 'Common.ValueListParameterInOut',
+                    LocalDataProperty: storeid_ID,
+                    ValueListProperty: 'ID'
+                },
+                {
+                    $Type            : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'storeid'
+                },
+
+            ]
+        }
+    );
+    productid @(
+        Common.Text: productid.productid,
+        Common.TextArrangement: #TextOnly,
+        Common.ValueListWithFixedValues: true,
+        Common.ValueList               : {
+            Label         : 'Product id',
+            CollectionPath: 'Product',
+            Parameters    : [
+                {
+                    $Type            : 'Common.ValueListParameterInOut',
+                    LocalDataProperty: productid_ID,
+                    ValueListProperty: 'ID'
+                },
+                {
+                    $Type            : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'productid'
+                },
+
+            ]
+        }
+    );
+    stock_qty  @(
+        Common.Text: stock_qty_ID.stock_qty_ID,
+        Common.TextArrangement: #TextOnly,
+        Common.ValueListWithFixedValues: true,
+        Common.ValueList               : {
+            Label         : 'Quantity',
+            CollectionPath: 'Stockdata',
+            Parameters    : [
+                {
+                    $Type            : 'Common.ValueListParameterInOut',
+                    LocalDataProperty: stock_qty_ID,
+                    ValueListProperty: 'ID'
+                },
+                {
+                    $Type            : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'stock_qty'
+                },
+
+            ]
+        }
+    );
+    price     @(
+        Common.ValueListWithFixedValues: true,
+        Common.ValueList               : {
+            Label         : 'Price',
+            CollectionPath: 'Product',
+            Parameters    : [
+                {
+                    $Type            : 'Common.ValueListParameterInOut',
+                    LocalDataProperty: price_ID,
+                    ValueListProperty: 'ID'
+                },
+                {
+                    $Type            : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'sell_price'
+                },
+
             ]
         }
     );
